@@ -9,7 +9,7 @@ def init_dataset(dataset):
 
     # convert data to single string
     for line in data_raw:
-        data_string += line.strip().lower()
+        data_string += line.strip().lower() + ' '
     
     # split into list of sentences and remove spaces on both sides
     data_list = re.split('[\.\?\!\:\;]\s*', data_string)
