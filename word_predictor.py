@@ -4,7 +4,7 @@ import re
 
 # process data and initialize dataset with words and there possible predictions
 def init_dataset(dataset):
-    data_raw = open('FP/dataset.txt', 'r', encoding='utf8')
+    data_raw = open('COMP3106_Final_Project/dataset.txt', 'r', encoding='utf8')
     data_string = ""
 
     # convert data to single string
