@@ -14,17 +14,17 @@ def updateListBox(words):
 #checks for the similar letter in words as the texts are being typed ins search box
 #and keeps relevent text
 def findWordsFromListBox(e):
-	searchText = searchTextBox.get()
-
-	if searchText == '':
-		wordsFound = words
-	else:
-		wordsFound = []
-		for i in words:
-			if searchText.lower() in item.lower():
-				wordsFound.append(i)
-
-	updateListBox(wordsFound)               
+    searchText = searchTextBox.get()
+    #prints the result to cmd as the user types the text in searchbox
+    print(searchText)
+    if searchText == '':
+    	wordsFound = words
+    else:
+        wordsFound = []
+        for i in words:
+            if searchText.lower() in i.lower():
+                wordsFound.append(i)
+    updateListBox(wordsFound)               
 
 #setting output ui's window size to middle by calculating the screenwidth and height
 windowWidth = 400
