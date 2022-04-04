@@ -109,7 +109,7 @@ def generatePrediction(nMinusWords, nGram, nMinusOneGram):
 
     return topNextWords
 
-
+'''
 def main():
     # dictionary: keys are strings and is the n consecutive words, values is its count of occurences
     nGram = {}
@@ -133,7 +133,7 @@ def main():
     print()
 
 main()
-
+'''
 
 # Some ways to get better accuracy: have a larger data set, but this will require larger cpu power
 # another way for better accuracy is getting better data sets with more common every day phrases
