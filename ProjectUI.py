@@ -1,6 +1,8 @@
 from tkinter import *
 import nGram as nGramFile
-N = 6
+N = 3
+nGram = {}
+nMinusOneGram = {}
 
 def resetWordsListBox(searchTextBox,wordsList,words,e):
     #when clicked on any word then reset the textbox and update that word in text box
@@ -30,7 +32,7 @@ def findWordsFromListBox(searchTextBox,wordsList,words,e):
     for k in predictedWords:
         words.append(k)
     if searchText == '':
-    	wordsFound = words
+        wordsFound = words
     else:
         wordsFound = []
         for i in words:
@@ -84,16 +86,12 @@ def windowFun():
     window.mainloop()
 
 def predictWord(searchText):
-    
-    nGram = {}
-    nMinusOneGram = {}
     nMinusWords = ""
-    nGramFile.generateGrams(nGram, nMinusOneGram)
 
     # start input command
     line = searchText.get()
     # Grab the last N - 1 words from line
-    lastWords = line.lower().split()[-(N-1):]     
+    lastWords = line.lower().split()[-(N-1):]
     
     # Convert back to a single string
     for word in lastWords:
@@ -107,6 +105,7 @@ def predictWord(searchText):
     return prediction
     
 def main():
+    nGramFile.generateGrams(nGram, nMinusOneGram)
     windowFun()
     
 main()

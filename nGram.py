@@ -2,7 +2,7 @@ import numpy as np
 
 # Constant variables
 PUNCTUATIONS = "./\"',<>!?@#$%^&*()~`\\:;“”"
-DATAPATH = 'COMP3106_Final_Project/dataset.txt'
+DATAPATH = './dataset.txt'
 N = 3
 
 # Returns and removes all punctuation at the beginning and ending of word
@@ -76,7 +76,7 @@ def generateGrams(nGram, nMinusOneGram):
 
 # Function to generate and return our top predicted next word as a list
 def generatePrediction(nMinusWords, nGram, nMinusOneGram):
-    maxNum = 3
+    maxNum = 6
     count = 0
     topNextWords = []
     potentialNextWords = {}
