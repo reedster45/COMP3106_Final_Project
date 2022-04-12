@@ -4,21 +4,34 @@ N = 3
 nGram = {}
 nMinusOneGram = {}
 
+window = Tk(className = "Next Word Predictor")
+
+
 def resetWordsListBox(searchTextBox,wordsList,words,e):
-    #when clicked on any word then reset the textbox and update that word in text box
-	#searchTextBox.delete(0, END)
-    
+    #when clicked on any word then reset the textbox and update that word in text box    
     serachTextLen = len(searchTextBox.get())
     searchTextBox.insert(serachTextLen, wordsList.get(ANCHOR) +" ")
     findWordsFromListBox(searchTextBox, wordsList, words, e)
 
 def updateListBox(searchTextBox, wordsList,words):
     #adding each word from wordList to list box
-    #predictWord(searchTextBox)
+    #print("pressed backspacce")
+    if(type(searchTextBox) == str):
+        if len(words) == 0 and (len(searchTextBox) > 0):
+            notFoundLabel = Label(window,text="Words not found !!", justify="left", fg = "red")
+            notFoundLabel.place(x=-50,y=160,width=600)  
+        else:
+            notFoundLabel = Label(window,text="", justify="left")
+            notFoundLabel.place(x=-50,y=160,width=600) 
+    elif (len(searchTextBox.get()) == 0):
+        notFoundLabel = Label(window,text="", justify="left")
+        notFoundLabel.place(x=-50,y=160,width=600) 
+
     line = searchTextBox
     wordsList.delete(0, END)
     for i in words:
         wordsList.insert(END, i)
+
         
 #checks for the similar letter in words as the texts are being typed ins search box
 #and keeps relevent text
@@ -27,7 +40,6 @@ def findWordsFromListBox(searchTextBox,wordsList,words,e):
     #prints the result to cmd as the user types the text in searchbox
     #print(searchText)
     predictedWords = predictWord(searchTextBox)
-    
     words = []
     for k in predictedWords:
         words.append(k)
@@ -44,7 +56,6 @@ def windowFun():
     #setting output ui's window size to middle by calculating the screenwidth and height
     windowWidth = 600
     windowHeight = 300
-    window = Tk(className = "Next Word Predictor")
     screenWidth = window.winfo_screenwidth() 
     screenHeight = window.winfo_screenheight() 
     
@@ -72,16 +83,18 @@ def windowFun():
     
     #label for manual
     manualLabel = Label(window, text = "Manual : ", anchor="e",justify="left")
-    manualLabel.place(x=20,y=190,width=60,height=15)
+    manualLabel.place(x=20,y=210,width=60,height=15)
     
     #label to display manual text
     manualTextLabel = Label(window,text="Type text in textbox labeled 'Search', after typing text press the space bar and if there is any word that \ncan be resulted from prediction will be displayed in listbox, to select the word from listbox double \nclick on that word", justify="left")
-    manualTextLabel.place(x=-5,y=210,width=600)
+    manualTextLabel.place(x=-5,y=230,width=600)
     
     #updating the search text
+
     updateListBox(searchTextBox, wordsList,words)
     wordsList.bind("<Double-Button-1>",lambda event : resetWordsListBox(searchTextBox,wordsList,words,event))
     searchTextBox.bind("<space>", lambda event : findWordsFromListBox(searchTextBox, wordsList,words,event))
+    searchTextBox.bind("<BackSpace>", lambda event : findWordsFromListBox(searchTextBox, wordsList,words,event))
 
     window.mainloop()
 
@@ -101,7 +114,6 @@ def predictWord(searchText):
     # Get prediction of next word - if there is no prediction, will return an empty list
     prediction = nGramFile.generatePrediction(nMinusWords, nGram, nMinusOneGram)
 
-    
     return prediction
     
 def main():

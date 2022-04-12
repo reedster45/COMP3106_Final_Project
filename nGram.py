@@ -105,35 +105,6 @@ def generatePrediction(nMinusWords, nGram, nMinusOneGram):
         if count > maxNum:
             break
         topNextWords.append(word)
-        
-
     return topNextWords
-
-'''
-def main():
-    # dictionary: keys are strings and is the n consecutive words, values is its count of occurences
-    nGram = {}
-    nMinusOneGram = {}
-    nMinusWords = ""
-    generateGrams(nGram, nMinusOneGram)
-
-    # start input command
-    line = input('> ')
-    # Grab the last N - 1 words from line
-    lastWords = line.lower().split()[-(N-1):]     
-
-    # Convert back to a single string
-    for word in lastWords:
-        nMinusWords = nMinusWords + " " + removePunctuations(word)
-    nMinusWords = nMinusWords.strip()
-
-    # Get prediction of next word - if there is no prediction, will return an empty list
-    prediction = generatePrediction(nMinusWords, nGram, nMinusOneGram)
-    print(prediction)
-    print()
-
-main()
-'''
-
 # Some ways to get better accuracy: have a larger data set, but this will require larger cpu power
 # another way for better accuracy is getting better data sets with more common every day phrases
