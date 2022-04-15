@@ -3,7 +3,6 @@ import numpy as np
 # Constant variables
 PUNCTUATIONS = "./\"',<>!?@#$%^&*()~`\\:;“”"
 DATAPATH = './dataset.txt'
-N = 3
 
 # Returns and removes all punctuation at the beginning and ending of word
 def removePunctuations(word):
@@ -19,10 +18,64 @@ def removePunctuations(word):
     return word
 
 
-# Function to create our and count them n-gram and (n-1)-gram
-def generateGrams(nGram, nMinusOneGram):
+# # Function to create our and count them n-gram and (n-1)-gram
+# def generateGrams(nGram, nMinusOneGram, n):
+#     nWords = ""
+#     nMinusOneWords = ""
+#     wordList = []
+
+#     # Read in our text file
+#     rawData = open(DATAPATH, 'r', encoding='utf8')
+
+#     # Add every word into our wordList from rawData
+#     for line in rawData:
+#         cleanedLine = line.lower().split()
+#         wordList = wordList + cleanedLine
+
+#     # Generate our n-gram/(n-1)-gram count
+#     for word in wordList:
+#         # if there are less than N words in nWords, we will add the current word to it
+#         if len(nWords.split()) < n:
+#             nWords = nWords + " " + removePunctuations(word)
+#             nWords = nWords.strip()
+#         # similarly, if there are less than (N - 1) words in nMinusOneWords, we will also add the current word to it
+#         if len(nMinusOneWords.split()) < n - 1:
+#             nMinusOneWords = nMinusOneWords + " " + removePunctuations(word)
+#             nMinusOneWords = nMinusOneWords.strip()
+        
+#         # Add nWords to our count of n-grams
+#         if len(nWords.split()) == n:
+#             # check if this nWords has been added
+#             if nWords not in nGram:
+#                 nGram[nWords] = 1
+#             # if not added, we increase count for occurrence of nWords
+#             else:
+#                 nGram[nWords] = nGram[nWords] + 1
+            
+#             # Remove first word from nWords
+#             nWords = nWords.split(' ', 1)[1]
+        
+#         # Do the same with nMinusOneWords with nMinusOneGram
+#         if len(nMinusOneWords.split()) == n - 1:
+#             if nMinusOneWords not in nMinusOneGram:
+#                 nMinusOneGram[nMinusOneWords] = 1
+#             else:
+#                 nMinusOneGram[nMinusOneWords] = nMinusOneGram[nMinusOneWords] + 1
+#             if " " in nMinusOneWords:
+#                 nMinusOneWords = nMinusOneWords.split(' ', 1)[1]
+#             else:
+#                 nMinusOneWords = ""
+        
+#         # Finally, current word is the end of a sentence/clause, then we will start a new set of strings to add
+#         if word[-1] in PUNCTUATIONS:
+#             # We create a new nGram section, this will make suggestions more human-like
+#             nWords = ""
+#             nMinusOneWords = ""
+
+
+# Generate a nGram with n words
+def generateGrams(nGram, n):
     nWords = ""
-    nMinusOneWords = ""
     wordList = []
 
     # Read in our text file
@@ -33,19 +86,15 @@ def generateGrams(nGram, nMinusOneGram):
         cleanedLine = line.lower().split()
         wordList = wordList + cleanedLine
 
-    # Generate our n-gram/(n-1)-gram count
+    # Generate our n-gram
     for word in wordList:
         # if there are less than N words in nWords, we will add the current word to it
-        if len(nWords.split()) < N:
+        if len(nWords.split()) < n:
             nWords = nWords + " " + removePunctuations(word)
             nWords = nWords.strip()
-        # similarly, if there are less than (N - 1) words in nMinusOneWords, we will also add the current word to it
-        if len(nMinusOneWords.split()) < N - 1:
-            nMinusOneWords = nMinusOneWords + " " + removePunctuations(word)
-            nMinusOneWords = nMinusOneWords.strip()
         
         # Add nWords to our count of n-grams
-        if len(nWords.split()) == N:
+        if len(nWords.split()) == n:
             # check if this nWords has been added
             if nWords not in nGram:
                 nGram[nWords] = 1
@@ -54,24 +103,13 @@ def generateGrams(nGram, nMinusOneGram):
                 nGram[nWords] = nGram[nWords] + 1
             
             # Remove first word from nWords
-            nWords = nWords.split(' ', 1)[1]
+            if n > 1:
+                nWords = nWords.split(' ', 1)[1]
         
-        # Do the same with nMinusOneWords with nMinusOneGram
-        if len(nMinusOneWords.split()) == N - 1:
-            if nMinusOneWords not in nMinusOneGram:
-                nMinusOneGram[nMinusOneWords] = 1
-            else:
-                nMinusOneGram[nMinusOneWords] = nMinusOneGram[nMinusOneWords] + 1
-            if " " in nMinusOneWords:
-                nMinusOneWords = nMinusOneWords.split(' ', 1)[1]
-            else:
-                nMinusOneWords = ""
-        
-        # Finally, current word is the end of a sentence/clause, then we will start a new set of strings to add
+        # Finally, if the current word is the end of a sentence/clause, then we will start a new set of strings to add
         if word[-1] in PUNCTUATIONS:
             # We create a new nGram section, this will make suggestions more human-like
             nWords = ""
-            nMinusOneWords = ""
 
 
 # Function to generate and return our top predicted next word as a list
